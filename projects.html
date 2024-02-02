@@ -17,15 +17,27 @@
                   <span class="title-left">Statistical Anti-Cheat</span>
                   <span class="title-right">Jan 2024</span>
                 </div>
-                <p class="hacker-text">I made an N-way superscalar Out-of-Order (OoO) processor based on MIPS R10K architecture. It also supported early branch resolution to improve processor performance and was implemented in SystemVerilog. I learned a lot about synthesizing hardware, creating testbenches, and verifying the correctness of the hardware.</p>
+                <p class="hacker-text">
+                  As a Proof of Concept, I developed a Statistical Anti-Cheat system designed to identify potential cheaters in gaming environments. The system calculates the average and standard deviation for specific in-game data points. Each player is then evaluated based on their <a href="https://en.wikipedia.org/wiki/Standard_score" target="_blank" rel="noreferrer noopener">Z-Score</a>, which measures how far their performance deviates beyond the standard deviation. Subsequently, this Z-Score is fed into a tunable exponential function to generate a 'Cheater Score.' Players are ranked by their Cheater Scores, enabling quick identification and review of hightly disruptive players. The source code for this project is available on <a href="https://github.com/ehm1x/Statistical-Anticheat" target="_blank" rel="noreferrer noopener">GitHub</a>.
+              </p>
               </div>
               
               <div class="experience-item">
                 <div class="hacker-title">
-                  <span class="title-left">Self-Driving Robot</span>
+                  <span class="title-left">Fantasy Football App</span>
                   <span class="title-right">Fall 2019</span>
                 </div>
-                <p class="hacker-text">I made a self-driving robot using an FPGA board. The robot used sensors and motors to move and its goal was to drive around indefinitely as long as its path wasn’t obstructed. This was done in Verilog and I learned how to use wave simulation test benches during this project.</p>
+                <p class="hacker-text">
+                  I built a full-stack fantasy football app that's been through two iterations. The first version was built using a React, Node, Mongo, and Express stack. After that, I rebuilt the same application with Angular to deepen my understanding of different frameworks.
+              
+                  This app allows users to enter their Sleeper username and select which league they would like to analyze. Next, the app will perform a comprehensive analysis of all the players, providing insights into individual trade values, total team values, and even potential trade targets.
+              
+                  One of the standout features is the trade analyzer. It lets users pick another team in their league, propose a hypothetical trade, and see an evaluation of the trade based on statistical "Trade Value".
+              
+                  Additionally, the app included a player rankings page. This custom-developed table was filterable by player position and also sortable across various statistical categories. Each cell in the table is color-coded to reflect the performance level of that data point for the player's position, making it easy to compare and contrast at a glance.
+              
+                  If you're curious about the details or would like to delve into the code, the front-end source is available on GitHub <a href="https://github.com/ehm1x/FantasyWebApp" target="_blank" rel="noopener noreferrer">here</a>, and the back-end source can be found <a href="https://github.com/ehm1x/Fantasy-Web-Server" target="_blank" rel="noopener noreferrer">here</a>. Feel free to take a look!
+              </p>
               </div>
           </div>    
         <div class="instructions">

@@ -35,12 +35,22 @@ function showLoadingAnimation(elements, initialText) {
 }
 
 function scrollToTopLeft() {
-	setTimeout(() => {
+    setTimeout(() => {
         const terminal = document.querySelector('.terminal');
-		terminal.scrollTop = 0;
-		terminal.scrollLeft = 0;
-    }, 10); 
-	window.scrollTo(0, 0);
+        if (terminal) {
+            terminal.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+            });
+        }
+    }, 10);
+    
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+    });
 }
 
 const inputField = document.querySelector('.input-field');
@@ -82,8 +92,12 @@ inputField.addEventListener('keydown', (e) => {
 				scrollToTopLeft();
                 break;
             default:
-                alert('Invalid command. Please enter a valid option.');
+                alert('Segmentation Fault (Core Dumped) - Nah just kidding, that command doesn\'t exist. Try again!');
         }
+	}
+	else{
+		e.preventDefault();
+		focusTerminalInput();
 	}
 });
 
@@ -150,8 +164,42 @@ function scrambleText(targetElement, originalText, duration, callback) {
 }
 
 function focusTerminalInput() {
-    const terminalInput = document.querySelector('.input-field');
-    if (terminalInput) {
-        terminalInput.focus();
-    }
-}
+	const terminalInput = document.querySelector('.input-field');
+	if (terminalInput) {
+	  // Use scrollIntoView with smooth behavior
+	  terminalInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+	  // Focus the terminalInput
+	  // Use setTimeout if focus does not work directly after smooth scroll
+	  setTimeout(() => terminalInput.focus(), 300);
+	}
+  }
+
+
+  document.addEventListener('DOMContentLoaded', (event) => {
+	// Fade in the new content by default
+	document.body.classList.add('fade-in');
+  
+	// Attach the fade-out transition to all links
+	document.querySelectorAll('a').forEach(link => {
+	  link.addEventListener('click', function (e) {
+		e.preventDefault(); // Prevent the default link behavior
+		const newUrl = this.getAttribute('href'); // Get the URL of the link
+  
+		// Add the fade-out class to the body
+		document.body.classList.add('fade-out');
+  
+		// After the animation completes, navigate to the new page
+		setTimeout(() => {
+		  window.location = newUrl;
+		}, 500); // This should match the animation duration
+	  });
+	});
+  });
+
+  document.addEventListener('DOMContentLoaded', (event) => {
+	window.scrollTo({
+	  top: 0,
+	  left: 0,
+	  behavior: 'smooth'
+	});
+  });
