@@ -12,7 +12,9 @@ body, html {
     height: 100%;
     margin: 0;
 }
-
+html {
+    scroll-behavior: smooth;
+  }
 .wrapper {
     width: 95%;
 	height: 92%;
@@ -271,4 +273,36 @@ pre {
     width: 300px; /* Increase width to zoom in */
     object-fit: cover; /* Cover the area of the container */
     margin-top: 55px;
+  }
+
+  /* Fade out */
+.fade-out {
+    animation: fadeOut 0.5s;
+    opacity: 0;
+    transition: visibility 0s 0.5s, opacity 0.5s linear;
+  }
+  
+  /* Fade in */
+  .fade-in {
+    animation: fadeIn 0.5s;
+    opacity: 1;
+    transition: opacity 0.5s linear;
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
