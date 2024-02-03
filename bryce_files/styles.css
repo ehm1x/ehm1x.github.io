@@ -1,253 +1,275 @@
 body {
-    background-color: #000;
-    font-family: monospace;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  background-color: #000;
+  font-family: monospace;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-body, html {
-    height: 100%;
-    margin: 0;
-}
+body,
 html {
-    scroll-behavior: smooth;
-  }
-.wrapper {
-    width: 95%;
-	height: 92%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px; /* Add some padding around the terminal */
+  height: 100%;
+  margin: 0;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+.wrapper {
+  width: 95%;
+  height: 92%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  /* Add some padding around the terminal */
+}
+
+
 
 .terminal {
-	overflow: auto;
-	display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-	position: relative;
-    background-color: #1e1e1e;
-    width: 100%;
-	height: 100%;
-    max-width: 1500px;
-    padding: 1rem;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    min-height: 90vh;
-    border: 2px solid #0f0; /* Add this line */
-    scrollbar-width: none;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  background-color: #1e1e1e;
+  width: 100%;
+  height: 100%;
+  max-width: 1500px;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  min-height: 90vh;
+  border: 2px solid #0f0;
+  /* Add this line */
+  scrollbar-width: none;
 }
+
 .terminal::-webkit-scrollbar {
-    display:none; 
+  display: none;
 }
 
 
 .terminal-header {
-    color: #0f0;
-    font-weight: bold;
-    font-size: 1.75rem;
-    border-bottom: 1px solid #555;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
+  color: #0f0;
+  font-weight: bold;
+  font-size: 1.75rem;
+  border-bottom: 1px solid #555;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .terminal-content {
-    display: flex;
-	align-items: center;
-	flex-direction: column;
-    justify-content: space-evenly;
-	flex-grow: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  flex-grow: 1;
 }
 
 .image-placeholder {
-    width: 250px;
-    height: 250px;
-    border: 2px solid #0f0;
-    margin-right: 2rem;
+  width: 250px;
+  height: 250px;
+  border: 2px solid #0f0;
+  margin-right: 2rem;
 }
 
 .ascii-name {
-    color: #0f0;
-    font-size: 3.5rem;
-    margin-left: 0rem;
-    margin-top: 0rem;
+  color: #0f0;
+  font-size: 3.5rem;
+  margin-left: 0rem;
+  margin-top: 0rem;
 }
 
 /* Style for smaller screens */
 @media (max-width: 800px) {
-    .wrapper {
-        align-items: flex-start;
-        justify-content: flex-start;
-    }
+  .wrapper {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
 
-    .terminal {
-        margin: 0;
-        max-width: 100%;
-    }
-	
-	.ascii-name {
-		font-size: 1.25rem;
-	}
+  .terminal {
+    margin: 0;
+    max-width: 100%;
+  }
+
+  .ascii-name {
+    font-size: 1.25rem;
+  }
 }
 
 .instructions {
-    color: #0f0;
-    font-size: 1.5rem;
-    margin-bottom: .25rem; /* Update this value */
+  color: #0f0;
+  font-size: 1.5rem;
+  margin-bottom: .25rem;
+  /* Update this value */
 }
 
 .terminal-input {
-    color: #0f0;
-    display: flex;
-    align-items: center;
-    position: relative;
-	bottom: 0;
+  color: #0f0;
+  display: flex;
+  align-items: center;
+  position: relative;
+  bottom: 0;
 }
 
 .user-input {
-    font-size: 1.5rem;
-    color: #0f0;
+  font-size: 1.5rem;
+  color: #0f0;
 }
 
 .input-field {
-    background-color: transparent;
-    border: none;
-    color: #0f0;
-    outline: none;
-    flex-grow: 1;
-    margin-left: 0.5rem;
-    font-size: 1.5rem;
+  background-color: transparent;
+  border: none;
+  color: #0f0;
+  outline: none;
+  flex-grow: 1;
+  margin-left: 0.5rem;
+  font-size: 1.5rem;
 }
 
 .loading-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
 .loading-screen h1 {
-    color: #0f0;
-    font-size: 3rem;
-    font-family: monospace;
+  color: #0f0;
+  font-size: 3rem;
+  font-family: monospace;
 }
 
 .hacker-text {
-    color: #0f0;
-    font-size: 1.5rem;
-    line-height: 1.6;
-	margin-left: 3rem;
-	margin-right: 3rem;
+  color: #0f0;
+  font-size: 1.5rem;
+  line-height: 1.6;
+  margin-left: 3rem;
+  margin-right: 3rem;
 }
 
 .ascii-name-container {
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
 
 .ascii-name-glitch {
-    position: absolute;
-    top: 0;
-    left: 0;
-    color: #0f0;
-    opacity: 0.3;
-    text-shadow: 0 0 10px #0f0;
-    margin-top: 0rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #0f0;
+  opacity: 0.3;
+  text-shadow: 0 0 10px #0f0;
+  margin-top: 0rem;
 }
 
-.ascii-name, .ascii-name-glitch {
-    font-size: 5.5rem;
-    font-family: monospace;
-    white-space: pre-wrap;
-    line-height: 1.2;
+.ascii-name,
+.ascii-name-glitch {
+  font-size: 5.5rem;
+  font-family: monospace;
+  white-space: pre-wrap;
+  line-height: 1.2;
 }
 
 .socials-container {
-    text-align: center;
-    margin-top: 20px;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .social-link {
-    display: inline-block;
-    margin: 0 10px;
+  display: inline-block;
+  margin: 0 10px;
 }
 
 .social-icon {
-    width: 200px;
-    height: 200px;
-    transition: 0.3s;
+  width: 200px;
+  height: 200px;
+  transition: 0.3s;
 }
 
 .social-icon:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 ul.terminal-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
+
 .hacker-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 1rem; /* Adjust padding as needed */
-    margin: 0 auto; /* Centers the div */
-    width: 90%; /* Adjust max width as needed */
-    color: rgb(243, 245, 243);
-    font-size: 1.5rem;
-    font-weight:bold;
-    margin-bottom: 1rem;
-  }
-  
-  .title-left {
-    text-align: left;
-  }
-  
-  .experience-item {
-    margin-bottom: 5rem;
-    width: 90%;
-  }
-  
-  .title-right {
-    text-align: right;
-  }
-  
-  .terminal-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .terminal-list li {
-    position: relative;
-    padding-left: 1em;
-    font-size: 1.25rem;
-    margin-left: 2rem;
-    color: #0f0;
-    word-break: break-word;
-    margin-bottom: .5rem;
-  }
-  
-  .terminal-list li:before {
-    content: "•";
-    position: absolute;
-    left: -1em;
-    color: #0f0;
-    font-weight: bold;
-    font-size: 1.25rem;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  margin: 0;
+  width: 100%;
+  color: rgb(243, 245, 243);
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  padding-left: 0rem;
+}
+
+.title-left {
+  text-align: left;
+  margin-left: 2.7rem;
+}
+
+.experience-item {
+  margin-bottom: 5rem;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.title-right {
+  margin-right: 3.51
+  rem;
+  text-align: right;
+}
+
+.terminal-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.terminal-list li {
+  position: relative;
+  padding-left: .5em;
+  font-size: 1.25rem;
+  color: #0f0;
+  word-break: break-word;
+  margin-bottom: .5rem;
+  margin-left: 4rem;
+}
+
+.terminal-list li:before {
+  content: "•";
+  position: absolute;
+  left: -1em;
+  color: #0f0;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin-left: 3rem;
+}
 
 pre {
   overflow-x: auto;
@@ -258,51 +280,74 @@ pre {
   word-wrap: break-word;
 }
 
-.profile-pic-container {
-    width: 200px; /* Width of the visible area */
-    height: 200px; /* Height of the visible area */
-    border-radius: 50%; /* Circular shape */
-    overflow: hidden; /* Hide parts of the image outside the container */
-    display: flex; /* To center the image in the container */
-    justify-content: center; /* Align image horizontally */
-    align-items: center; /* Align image vertically */
-  }
+.about-content {
   
-  .profile-pic {
-    height: auto; /* Maintain aspect ratio */
-    width: 300px; /* Increase width to zoom in */
-    object-fit: cover; /* Cover the area of the container */
-    margin-top: 55px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-grow: 1;
+  
+}
+
+.profile-pic-container {
+  width: 200px;
+  /* Width of the visible area */
+  height: 200px;
+  /* Height of the visible area */
+  border-radius: 50%;
+  overflow: hidden;
+  /* Hide parts of the image outside the container */
+  display: flex;
+  /* To center the image in the container */
+  justify-content: center;
+  /* Align image horizontally */
+  align-items: center;
+  /* Align image vertically */
+  margin-right: 10px;
+}
+
+.profile-pic {
+  height: auto;
+  /* Maintain aspect ratio */
+  width: 300px;
+  /* Increase width to zoom in */
+  object-fit: cover;
+  /* Cover the area of the container */
+  margin-top: 55px;
+}
+
+/* Fade out */
+.fade-out {
+  animation: fadeOut 0.5s;
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
+}
+
+/* Fade in */
+.fade-in {
+  animation: fadeIn 0.5s;
+  opacity: 1;
+  transition: opacity 0.5s linear;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
   }
 
-  /* Fade out */
-.fade-out {
-    animation: fadeOut 0.5s;
+  to {
     opacity: 0;
-    transition: visibility 0s 0.5s, opacity 0.5s linear;
   }
-  
-  /* Fade in */
-  .fade-in {
-    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
     opacity: 1;
-    transition: opacity 0.5s linear;
   }
-  
-  @keyframes fadeOut {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
+}

@@ -97,6 +97,25 @@ inputField.addEventListener('keydown', (e) => {
 	}
 	else{
 		e.preventDefault();
+		switch(e.key){
+			case 'Backspace':
+				if(inputField.value.length > 0) inputField.value = inputField.value.slice(0, -1);
+				break;
+			default:
+			let keyCode = e.keyCode;
+			if (
+				(keyCode > 47 && keyCode < 58) ||
+				(keyCode > 64 && keyCode < 91) ||
+				(keyCode > 96 && keyCode < 123) ||
+				keyCode == 32
+			  ) { 
+
+				inputField.value += e.key;
+			  }
+			  break; 
+			
+		}
+		
 		focusTerminalInput();
 	}
 });
@@ -176,8 +195,9 @@ function focusTerminalInput() {
 
 
   document.addEventListener('DOMContentLoaded', (event) => {
+	let terminal = document.querySelector('.terminal');
 	// Fade in the new content by default
-	document.body.classList.add('fade-in');
+	terminal.classList.add('fade-in');
   
 	// Attach the fade-out transition to all links
 	document.querySelectorAll('a').forEach(link => {
@@ -186,7 +206,7 @@ function focusTerminalInput() {
 		const newUrl = this.getAttribute('href'); // Get the URL of the link
   
 		// Add the fade-out class to the body
-		document.body.classList.add('fade-out');
+		terminal.classList.add('fade-out');
   
 		// After the animation completes, navigate to the new page
 		setTimeout(() => {
