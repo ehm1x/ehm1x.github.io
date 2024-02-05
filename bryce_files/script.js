@@ -2,7 +2,8 @@ let elements;
 let initialText;
 
 function onLoad() {
-    scrollToTopLeft();
+    setTimeout(() => {scrollToTopLeft()}, 100)
+
 
     if (!sessionStorage.getItem("hasLoadedOnce") || (performance.navigation.type === performance.navigation.TYPE_RELOAD)) {
         const asciiName = document.querySelector('.ascii-name');
@@ -147,8 +148,7 @@ function handleCommand(command) {
 		terminal.classList.add('fade-out');
 		setTimeout(() => {
 			window.location.href = url;
-                
-		}, 300)
+		}, 301)
     } else {
         alert('Segmentation Fault (Core Dumped) - Nah just kidding, that command doesn\'t exist. Try again!');
     }
