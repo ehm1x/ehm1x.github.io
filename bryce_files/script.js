@@ -3,22 +3,32 @@ let initialText;
 
 function onLoad() {
     scrollToTopLeft();
-  
-	if (!sessionStorage.getItem("hasLoadedOnce") || (performance.navigation.type === performance.navigation.TYPE_RELOAD)) {
+
+    if (!sessionStorage.getItem("hasLoadedOnce") || (performance.navigation.type === performance.navigation.TYPE_RELOAD)) {
         const asciiName = document.querySelector('.ascii-name');
         const glitchElements = document.querySelectorAll('.ascii-name-glitch');
-        elements = [asciiName, ...glitchElements]; // Now accessible in a higher scope
-        initialText = asciiName.getAttribute('data-text'); // Now accessible in a higher scope
-        showLoadingAnimation(elements, initialText); // Pass as parameters
+        elements = [asciiName, ...glitchElements];
+        initialText = asciiName.getAttribute('data-text'); 
+        showLoadingAnimation(elements, initialText); 
         sessionStorage.setItem("hasLoadedOnce", "true");
-	}
+    }
+
+    let terminal = document.querySelector('.terminal');
+    terminal.classList.add('fade-in');
+  
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function (e) {
+            if (this.target !== '_blank') {
+                e.preventDefault();
+                const newUrl = this.getAttribute('href');
+                terminal.classList.add('fade-out');
+                setTimeout(() => {
+                    window.location = newUrl;
+                }, 500);
+            }
+        });
+    });
 }
-
-window.addEventListener("load", onLoad);
-
-window.onload = function() {
-    scrollToTopLeft();
-};
 
 function showLoadingAnimation(elements, initialText) {
     const loading = document.createElement('div');
@@ -28,30 +38,93 @@ function showLoadingAnimation(elements, initialText) {
 
     setTimeout(() => {
         loading.remove();
-		scrambleText(elements, initialText, 140, function () {
-			console.log("Scramble animation completed");
-		});
+        scrambleText(elements, initialText, 140, function () {
+            console.log("Scramble animation completed");
+        });
     }, 1000);
+}
+
+function scrambleText(elements, originalText, duration, callback) {
+    let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    let currentScramble = "";
+    let currentLetterIndex = 0;
+    let nextLetterIndex = 0;
+    let scrambleStartTime;
+
+    function randomChar() {
+        return chars[Math.floor(Math.random() * chars.length)];
+    }
+
+    function scramble() {
+        if (nextLetterIndex < originalText.length) {
+            if (originalText[nextLetterIndex] === " ") {
+                currentScramble += " ";
+                nextLetterIndex++;
+                scramble();
+            } else {
+                let elapsedTime = Date.now() - scrambleStartTime;
+                if (elapsedTime < duration) {
+                    let scrambledRemainder = originalText.slice(currentLetterIndex + 1).split('').map(char => {
+                        return char === ' ' ? ' ' : randomChar();
+                    }).join('');
+
+                    currentScramble = originalText.slice(0, currentLetterIndex) + randomChar() + scrambledRemainder;
+                    elements.forEach(el => el.textContent = currentScramble);
+                    setTimeout(scramble, 70);
+                } else {
+                    currentScramble = originalText.slice(0, currentLetterIndex + 1) + originalText.slice(currentLetterIndex + 1).replace(/[^ ]/g, randomChar());
+                    elements.forEach(el => el.textContent = currentScramble);
+                    currentLetterIndex++;
+                    nextLetterIndex++;
+                    scrambleStartTime = Date.now();
+                    if (nextLetterIndex < originalText.length) {
+                        requestAnimationFrame(scramble);
+                    } else {
+                        if (nextLetterIndex === originalText.length && originalText[currentLetterIndex] !== ' ') {
+                            currentScramble = originalText.slice(0, currentLetterIndex) + randomChar();
+                            elements.forEach(el => el.textContent = currentScramble);
+                            setTimeout(() => {
+                                currentScramble = originalText;
+                                elements.forEach(el => el.textContent = currentScramble);
+                                callback();
+                            }, 70);
+                        } else {
+                            callback();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    scrambleStartTime = Date.now();
+    scramble();
 }
 
 function scrollToTopLeft() {
     setTimeout(() => {
         const terminal = document.querySelector('.terminal');
-        if (terminal) {
-            terminal.scrollTo({
-                top: 0,
-                left: 0,
-                behavior: 'smooth'
-            });
-        }
+        terminal && terminal.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
     }, 10);
-    
-    window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'smooth'
-    });
 }
+
+function focusTerminalInput() {
+    const terminalInput = document.querySelector('.input-field');
+    if (terminalInput) {
+        terminalInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => terminalInput.focus(), 300);
+    }
+}
+
+window.addEventListener("load", onLoad);
 
 const inputField = document.querySelector('.input-field');
 
@@ -59,168 +132,56 @@ inputField.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
         const command = inputField.value.toLowerCase().trim();
         inputField.value = '';
-
-        switch (command) {
-            case '1':
-            case 'about me':
-                window.location.href = 'about.html';
-				scrollToTopLeft();
-                break;
-            case '2':
-            case 'articles':
-                window.location.href = 'articles.html';
-				scrollToTopLeft();
-                break;
-            case '3':
-            case 'experience':
-                window.location.href = 'experience.html';
-				scrollToTopLeft();
-                break;
-            case '4':
-            case 'projects':
-                window.location.href = 'projects.html';
-				scrollToTopLeft();
-                break;
-            case '5':
-            case 'socials':
-                window.location.href = 'social.html';
-				scrollToTopLeft();
-                break;
-			case '0':
-			case 'main':
-                window.location.href = 'index.html';
-				scrollToTopLeft();
-                break;
-            default:
-                alert('Segmentation Fault (Core Dumped) - Nah just kidding, that command doesn\'t exist. Try again!');
-        }
-	}
-	else{
-		e.preventDefault();
-		switch(e.key){
-			case 'Backspace':
-				if(inputField.value.length > 0) inputField.value = inputField.value.slice(0, -1);
-				break;
-			default:
-			let keyCode = e.keyCode;
-			if (
-				(keyCode > 47 && keyCode < 58) ||
-				(keyCode > 64 && keyCode < 91) ||
-				(keyCode > 96 && keyCode < 123) ||
-				keyCode == 32
-			  ) { 
-
-				inputField.value += e.key;
-			  }
-			  break; 
-			
-		}
-		
-		focusTerminalInput();
-	}
+        handleCommand(command);
+    } else {
+        handleKeydown(e);
+    }
 });
 
-function scrambleText(targetElement, originalText, duration, callback) {
-  let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-  let currentScramble = "";
-  let currentLetterIndex = 0;
-  let nextLetterIndex = 0;
-  let scrambleStartTime;
-
-    function randomChar() {
-		return chars[Math.floor(Math.random() * chars.length)];
-	}
-
-	function scramble() {
-	  if (nextLetterIndex < originalText.length) {
-		if (originalText[nextLetterIndex] === " ") {
-		  currentScramble += " ";
-		  nextLetterIndex++;
-		  scramble();
-		} else {
-		  let elapsedTime = Date.now() - scrambleStartTime;
-		  if (elapsedTime < duration) {
-			// Scramble the current character and the remaining characters
-			let scrambledRemainder = originalText.slice(currentLetterIndex + 1).split('').map(char => {
-			  return char === ' ' ? ' ' : randomChar();
-			}).join('');
-
-			if (originalText[currentLetterIndex] === ' ') {
-			  currentScramble = originalText.slice(0, currentLetterIndex) + ' ' + scrambledRemainder;
-			} else {
-			  currentScramble = originalText.slice(0, currentLetterIndex) + randomChar() + scrambledRemainder;
-			}
-			targetElement.forEach(el => el.textContent = currentScramble);
-			setTimeout(scramble, 70); // Slow down the swapping of random characters
-		  } else {
-			currentScramble = originalText.slice(0, currentLetterIndex + 1) + originalText.slice(currentLetterIndex + 1).replace(/[^ ]/g, randomChar());
-
-			targetElement.forEach(el => el.textContent = currentScramble);
-			currentLetterIndex++;
-			nextLetterIndex++;
-			scrambleStartTime = Date.now();
-			if (nextLetterIndex < originalText.length) {
-			  requestAnimationFrame(scramble);
-			} else {
-			  if (nextLetterIndex === originalText.length && originalText[currentLetterIndex] !== ' ') {
-				currentScramble = originalText.slice(0, currentLetterIndex) + randomChar();
-				targetElement.forEach(el => el.textContent = currentScramble);
-				setTimeout(() => {
-				  currentScramble = originalText;
-				  targetElement.forEach(el => el.textContent = currentScramble);
-				  callback();
-				}, 70);
-			  } else {
-				callback();
-			  }
-			}
-		  }
-		}
-	  }
-	}
-  scrambleStartTime = Date.now();
-  requestAnimationFrame(scramble);
+function handleCommand(command) {
+    const commands = {
+        '1': 'about.html',
+        'about me': 'about.html',
+        '2': 'articles.html',
+        'articles': 'articles.html',
+        '3': 'experience.html',
+        'experience': 'experience.html',
+        '4': 'projects.html',
+        'projects': 'projects.html',
+        '5': 'social.html',
+        'socials': 'social.html',
+        '0': 'index.html',
+        'main': 'index.html'
+    };
+    const url = commands[command];
+    if (url) {
+        window.location.href = url;
+        scrollToTopLeft();
+    } else {
+        alert('Segmentation Fault (Core Dumped) - Nah just kidding, that command doesn\'t exist. Try again!');
+    }
 }
 
-function focusTerminalInput() {
-	const terminalInput = document.querySelector('.input-field');
-	if (terminalInput) {
-	  // Use scrollIntoView with smooth behavior
-	  terminalInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-	  // Focus the terminalInput
-	  // Use setTimeout if focus does not work directly after smooth scroll
-	  setTimeout(() => terminalInput.focus(), 300);
-	}
-  }
+function handleKeydown(e) {
+    e.preventDefault();
+    let keyCode = e.keyCode;
+    if (keyCode === 8 && inputField.value.length > 0) {
+        inputField.value = inputField.value.slice(0, -1);
+    } else if (
+        (keyCode > 47 && keyCode < 58) ||
+        (keyCode > 64 && keyCode < 91) ||
+        (keyCode > 96 && keyCode < 123) ||
+        keyCode === 32
+    ) {
+        inputField.value += e.key;
+    }
+    focusTerminalInput();
+}
 
-
-  ddocument.addEventListener('DOMContentLoaded', (event) => {
-	let terminal = document.querySelector('.terminal');
-	terminal.classList.add('fade-in');
-  
-	document.querySelectorAll('a').forEach(link => {
-	  link.addEventListener('click', function (e) {
-		// Check if the link is meant to open in a new tab/window
-		if (this.target !== '_blank') {
-		  e.preventDefault(); // Prevent the default link behavior for same-tab navigation
-  
-		  const newUrl = this.getAttribute('href'); // Get the URL of the link
-  
-		  terminal.classList.add('fade-out');
-  
-		  setTimeout(() => {
-			window.location = newUrl;
-		  }, 500); // This should match the animation duration
-		}
-		// If the link has target="_blank", the default behavior will occur, opening the link in a new tab
-	  });
-	});
-  });
-
-  document.addEventListener('DOMContentLoaded', (event) => {
-	window.scrollTo({
-	  top: 0,
-	  left: 0,
-	  behavior: 'smooth'
-	});
-  });
+document.addEventListener('DOMContentLoaded', () => {
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+    });
+});
