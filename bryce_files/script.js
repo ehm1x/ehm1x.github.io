@@ -67,8 +67,8 @@ inputField.addEventListener('keydown', (e) => {
 				scrollToTopLeft();
                 break;
             case '2':
-            case 'education':
-                window.location.href = 'education.html';
+            case 'articles':
+                window.location.href = 'articles.html';
 				scrollToTopLeft();
                 break;
             case '3':
@@ -88,7 +88,7 @@ inputField.addEventListener('keydown', (e) => {
                 break;
 			case '0':
 			case 'main':
-                window.location.href = 'bryce.html';
+                window.location.href = 'index.html';
 				scrollToTopLeft();
                 break;
             default:
@@ -194,24 +194,25 @@ function focusTerminalInput() {
   }
 
 
-  document.addEventListener('DOMContentLoaded', (event) => {
+  ddocument.addEventListener('DOMContentLoaded', (event) => {
 	let terminal = document.querySelector('.terminal');
-	// Fade in the new content by default
 	terminal.classList.add('fade-in');
   
-	// Attach the fade-out transition to all links
 	document.querySelectorAll('a').forEach(link => {
 	  link.addEventListener('click', function (e) {
-		e.preventDefault(); // Prevent the default link behavior
-		const newUrl = this.getAttribute('href'); // Get the URL of the link
+		// Check if the link is meant to open in a new tab/window
+		if (this.target !== '_blank') {
+		  e.preventDefault(); // Prevent the default link behavior for same-tab navigation
   
-		// Add the fade-out class to the body
-		terminal.classList.add('fade-out');
+		  const newUrl = this.getAttribute('href'); // Get the URL of the link
   
-		// After the animation completes, navigate to the new page
-		setTimeout(() => {
-		  window.location = newUrl;
-		}, 500); // This should match the animation duration
+		  terminal.classList.add('fade-out');
+  
+		  setTimeout(() => {
+			window.location = newUrl;
+		  }, 500); // This should match the animation duration
+		}
+		// If the link has target="_blank", the default behavior will occur, opening the link in a new tab
 	  });
 	});
   });
