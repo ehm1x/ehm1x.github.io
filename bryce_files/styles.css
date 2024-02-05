@@ -320,16 +320,16 @@ pre {
 
 /* Fade out */
 .fade-out {
-  animation: fadeOut 0.5s;
+  animation: fadeOut .5s;
   opacity: 0;
-  transition: visibility 0s 0.5s, opacity 0.5s linear;
+  transition: visibility 0s .5s, opacity .5s linear;
 }
 
 /* Fade in */
 .fade-in {
-  animation: fadeIn 0.5s;
+  animation: fadeIn .5s;
   opacity: 1;
-  transition: opacity 0.5s linear;
+  transition: opacity .5s linear;
 }
 
 @keyframes fadeOut {

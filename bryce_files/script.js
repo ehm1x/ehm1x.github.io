@@ -13,9 +13,10 @@ function onLoad() {
         sessionStorage.setItem("hasLoadedOnce", "true");
     }
 
-    //let terminal = document.querySelector('.terminal');
-   // terminal.classList.add('fade-in');
-  
+     let terminal = document.querySelector('.terminal-content');
+	 if(!terminal) terminal = document.querySelector('.about-content');
+     terminal.classList.add('fade-in');
+
     // document.querySelectorAll('a').forEach(link => {
     //     link.addEventListener('click', function (e) {
     //         if (this.target !== '_blank') {
@@ -24,7 +25,7 @@ function onLoad() {
     //             terminal.classList.add('fade-out');
     //             setTimeout(() => {
     //                 window.location = newUrl;
-    //             }, 500);
+    //             }, 1000);
     //         }
     //     });
     // });
@@ -154,9 +155,15 @@ function handleCommand(command) {
         'main': 'index.html'
     };
     const url = commands[command];
+	let terminal = document.querySelector('.terminal-content');
+	if(!terminal) terminal = document.querySelector('.about-content');
     if (url) {
-        window.location.href = url;
-        scrollToTopLeft();
+		terminal.classList.remove('fade-in');
+		terminal.classList.add('fade-out');
+		setTimeout(() => {
+			window.location.href = url;
+			scrollToTopLeft();
+		}, 500)
     } else {
         alert('Segmentation Fault (Core Dumped) - Nah just kidding, that command doesn\'t exist. Try again!');
     }
