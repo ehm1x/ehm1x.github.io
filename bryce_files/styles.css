@@ -103,6 +103,11 @@ html {
   }
 }
 
+.article-link:hover{
+  color: #0f0;
+  transition: 300ms;
+}
+
 .instructions {
   color: #0f0;
   font-size: 1.5rem;
