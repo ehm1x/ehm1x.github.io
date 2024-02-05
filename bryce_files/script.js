@@ -16,18 +16,18 @@ function onLoad() {
     let terminal = document.querySelector('.terminal');
     terminal.classList.add('fade-in');
   
-    document.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', function (e) {
-            if (this.target !== '_blank') {
-                e.preventDefault();
-                const newUrl = this.getAttribute('href');
-                terminal.classList.add('fade-out');
-                setTimeout(() => {
-                    window.location = newUrl;
-                }, 500);
-            }
-        });
-    });
+    // document.querySelectorAll('a').forEach(link => {
+    //     link.addEventListener('click', function (e) {
+    //         if (this.target !== '_blank') {
+    //             e.preventDefault();
+    //             const newUrl = this.getAttribute('href');
+    //             terminal.classList.add('fade-out');
+    //             setTimeout(() => {
+    //                 window.location = newUrl;
+    //             }, 500);
+    //         }
+    //     });
+    // });
 }
 
 function showLoadingAnimation(elements, initialText) {
