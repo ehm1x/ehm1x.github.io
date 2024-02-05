@@ -13,8 +13,8 @@ function onLoad() {
         sessionStorage.setItem("hasLoadedOnce", "true");
     }
 
-    let terminal = document.querySelector('.terminal');
-    terminal.classList.add('fade-in');
+    //let terminal = document.querySelector('.terminal');
+   // terminal.classList.add('fade-in');
   
     // document.querySelectorAll('a').forEach(link => {
     //     link.addEventListener('click', function (e) {
