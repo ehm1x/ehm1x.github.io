@@ -106,8 +106,8 @@ html {
 .instructions {
   color: #0f0;
   font-size: 1.5rem;
-  margin-bottom: .25rem;
-  /* Update this value */
+  width:100%;
+  margin-top: 3rem;
 }
 
 .terminal-input {
@@ -163,6 +163,8 @@ html {
 .ascii-name-container {
   position: relative;
   overflow: hidden;
+  margin-bottom: 2rem;
+  margin-top: 5rem;
 }
 
 .ascii-name-glitch {
@@ -320,16 +322,14 @@ pre {
 
 /* Fade out */
 .fade-out {
-  animation: fadeOut .5s;
+  animation: fadeOut .3s;
   opacity: 0;
-  transition: visibility 0s .5s, opacity .5s linear;
 }
 
 /* Fade in */
 .fade-in {
-  animation: fadeIn .5s;
+  animation: fadeIn .3s;
   opacity: 1;
-  transition: opacity .5s linear;
 }
 
 @keyframes fadeOut {

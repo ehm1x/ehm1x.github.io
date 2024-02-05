@@ -12,23 +12,6 @@ function onLoad() {
         showLoadingAnimation(elements, initialText); 
         sessionStorage.setItem("hasLoadedOnce", "true");
     }
-
-     let terminal = document.querySelector('.terminal-content');
-	 if(!terminal) terminal = document.querySelector('.about-content');
-     terminal.classList.add('fade-in');
-
-    // document.querySelectorAll('a').forEach(link => {
-    //     link.addEventListener('click', function (e) {
-    //         if (this.target !== '_blank') {
-    //             e.preventDefault();
-    //             const newUrl = this.getAttribute('href');
-    //             terminal.classList.add('fade-out');
-    //             setTimeout(() => {
-    //                 window.location = newUrl;
-    //             }, 1000);
-    //         }
-    //     });
-    // });
 }
 
 function showLoadingAnimation(elements, initialText) {
@@ -60,7 +43,8 @@ function scrambleText(elements, originalText, duration, callback) {
         if (nextLetterIndex < originalText.length) {
             if (originalText[nextLetterIndex] === " ") {
                 currentScramble += " ";
-                nextLetterIndex++;
+                currentLetterIndex++; 
+                nextLetterIndex+=2;
                 scramble();
             } else {
                 let elapsedTime = Date.now() - scrambleStartTime;
@@ -95,6 +79,7 @@ function scrambleText(elements, originalText, duration, callback) {
                     }
                 }
             }
+            
         }
     }
     scrambleStartTime = Date.now();
@@ -162,8 +147,8 @@ function handleCommand(command) {
 		terminal.classList.add('fade-out');
 		setTimeout(() => {
 			window.location.href = url;
-			scrollToTopLeft();
-		}, 500)
+                
+		}, 300)
     } else {
         alert('Segmentation Fault (Core Dumped) - Nah just kidding, that command doesn\'t exist. Try again!');
     }
@@ -186,6 +171,9 @@ function handleKeydown(e) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    let terminal = document.querySelector('.terminal-content');
+    if (!terminal) terminal = document.querySelector('.about-content');
+    terminal.classList.add('fade-in');
     window.scrollTo({
         top: 0,
         left: 0,
