@@ -187,6 +187,9 @@ html {
   font-family: monospace;
 }
 
+* {
+  user-select: none;
+}
 .hacker-text {
   color: #0f0;
   font-size: 1.5rem;

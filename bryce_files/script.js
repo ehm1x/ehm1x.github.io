@@ -1,6 +1,7 @@
 let elements;
 let initialText;
-
+let terminalHistory = sessionStorage.getItem("terminalHistory") ? JSON.parse(sessionStorage.getItem("terminalHistory")) : [];
+let terminalHistoryIndex = terminalHistory.length;
 function onLoad() {
   setTimeout(() => {
     scrollToTopLeft();
@@ -135,10 +136,25 @@ window.addEventListener("load", onLoad);
 const inputField = document.querySelector(".input-field");
 
 inputField.addEventListener("keydown", (e) => {
+  e.preventDefault();
+  focusTerminalInput(); 
   if (e.key === "Enter") {
+    terminalHistory.push(inputField.value);
+    terminalHistoryIndex = terminalHistory.length;
+    sessionStorage.setItem("terminalHistory", JSON.stringify(terminalHistory));
     const command = inputField.value.toLowerCase().trim();
     inputField.value = "";
     handleCommand(command);
+  } else if (e.key === "ArrowUp") {
+    if(terminalHistory.length > 0 && terminalHistoryIndex > 0) {
+      terminalHistoryIndex--;
+      inputField.value = terminalHistory[terminalHistoryIndex];
+    }
+  } else if (e.key === "ArrowDown") {
+    if(terminalHistory.length > 0 && terminalHistoryIndex < terminalHistory.length - 1) {
+      terminalHistoryIndex++;
+      inputField.value = terminalHistory[terminalHistoryIndex];
+    }
   } else {
     handleKeydown(e);
   }
@@ -178,24 +194,37 @@ function handleCommand(command) {
 }
 
 function handleKeydown(e) {
-  e.preventDefault();
+  let cursorPos = inputField.selectionStart;
   let keyCode = e.keyCode;
-  if (keyCode === 8 && inputField.value.length > 0) {
-    inputField.value = inputField.value.slice(0, -1);
+
+  if (keyCode === 8 && cursorPos > 0) {
+    // Handle Backspace key
+    inputField.value = inputField.value.slice(0, cursorPos - 1) + inputField.value.slice(cursorPos);
+    inputField.setSelectionRange(cursorPos - 1, cursorPos - 1);
+  } else if (keyCode === 37 && cursorPos > 0) {
+    // Handle Arrow Left key
+    inputField.setSelectionRange(cursorPos - 1, cursorPos - 1);
+  } else if (keyCode === 39 && cursorPos < inputField.value.length) {
+    // Handle Arrow Right key
+    inputField.setSelectionRange(cursorPos + 1, cursorPos + 1);
   } else if (
     (keyCode > 47 && keyCode < 58) ||
     (keyCode > 64 && keyCode < 91) ||
     (keyCode > 96 && keyCode < 123) ||
     keyCode === 32
   ) {
-    inputField.value += e.key;
+    // Handle other valid keys
+    const inputValue = inputField.value;
+    const newValue = inputValue.slice(0, cursorPos) + e.key + inputValue.slice(cursorPos);
+    inputField.value = newValue;
+    inputField.setSelectionRange(cursorPos + 1, cursorPos + 1);
   }
-  focusTerminalInput();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   let terminal = document.querySelector(".terminal-content");
   if (!terminal) terminal = document.querySelector(".about-content");
+
   terminal.classList.add("fade-in");
   window.scrollTo({
     top: 0,
@@ -249,7 +278,10 @@ int main() {
   }
 });
 
-function focusFizzBuzzInput() {
+function focusFizzBuzzInput(event) {
+  if (document.getElementById("fizzbuzz-output") !== null) {
+  event.stopPropagation(); 
+}
   const fizz = document.querySelector(".fizzbuzz-output");
   if (fizz) {
     fizz.scrollIntoView({ behavior: "smooth", block: "center" });
