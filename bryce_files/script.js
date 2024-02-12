@@ -210,7 +210,7 @@ function handleKeydown(e) {
   } else if (
     (keyCode > 47 && keyCode < 58) ||
     (keyCode > 64 && keyCode < 91) ||
-    (keyCode > 96 && keyCode < 123) ||
+    (keyCode >= 96 && keyCode < 123) ||
     keyCode === 32
   ) {
     // Handle other valid keys
@@ -271,7 +271,7 @@ int main() {
         }
       }
     });
-    fizzbuzz.addEventListener("blur", (e) => {
+    fizzbuzz.addEventListener("unload", (e) => {
       iter = 0;
       fizzbuzz.value = "";
     });
